@@ -1,3 +1,6 @@
+import path from 'path';
+import express from 'express';
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -5,24 +8,35 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var root = require('./routes/root');
 var users = require('./routes/users');
 
+var PORT = 8080;
 var app = express();
+app.set('port', process.env.PORT || PORT);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// set up local variables
+app.locals.custom = {
+  title: 'Lodestone',
+  env: app.get('env'),
+  baseUrl: 'http://localhost:8080/'
+};
+if (app.get('env') === 'development') {
+  app.locals.custom.baseUrl = '/';
+}
+
+// set up middlewares
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
+app.use(express.static(path.join(__dirname, 'build')));
+app.use('/', root(app.locals.custom));
 app.use('/users', users);
 
 // catch 404 and forward to error handler
@@ -56,5 +70,15 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(3000);
-console.log('running...');
+var server = app.listen(app.get('port'), function() {
+  var logo = '\n\
+  ██╗      ██████╗ ██████╗ ███████╗███████╗████████╗ ██████╗ ███╗   ██╗███████╗\n\
+  ██║     ██╔═══██╗██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔═══██╗████╗  ██║██╔════╝\n\
+  ██║     ██║   ██║██║  ██║█████╗  ███████╗   ██║   ██║   ██║██╔██╗ ██║█████╗  \n\
+  ██║     ██║   ██║██║  ██║██╔══╝  ╚════██║   ██║   ██║   ██║██║╚██╗██║██╔══╝  \n\
+  ███████╗╚██████╔╝██████╔╝███████╗███████║   ██║   ╚██████╔╝██║ ╚████║███████╗\n\
+  ╚══════╝ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚══════╝\n\
+                                                                               ';
+  console.log(logo);
+  console.log('Running ' + app.get('env') + ' server on port:', server.address().port);
+});
