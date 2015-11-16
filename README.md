@@ -20,8 +20,17 @@ Lodestone Web App Development
 > cd lodestone
 > npm install
 ```
+- Babelify server.js (if server.js has been updated)
+```bash
+> babel server.js -o server.out.js
+```
 
 ## Run development server
+- Export ```NODE_ENV``` environment variable
+```bash
+> export NODE_ENV=development
+```
+
 Without Passenger:
 ```bash
 > npm start
@@ -33,10 +42,16 @@ With Passenger:
 ```
 
 ## Run production server
+- Export ```NODE_ENV``` environment variable
+```bash
+> export NODE_ENV=production
+> export PORT=8888
+```
+
 ```bash
 > sudo nginx
+> tail -f /var/log/nginx/nginx_error.log
 > npm run build
-> open http://localhost:8080
 ```
 
 ## Development

@@ -8,9 +8,18 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from './webpack.config.js';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3000 : process.env.PORT;
+let  port;
 const app = express();
 const outputColor = isDeveloping ? 'yellow' : 'green';
+if (isDeveloping) {
+  port = 3000;
+} else {
+  if (process.env.PORT) {
+    port = process.env.PORT;
+  } else {
+    port = 8888;
+  }
+}
 
 app.use(express.static(__dirname + '/dist'));
 
