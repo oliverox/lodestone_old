@@ -61,9 +61,11 @@ if (isDeveloping) {
   app.use((0, _webpackHotMiddleware2['default'])(compiler));
 }
 
-app.get('/*', function response(req, res) {
-  res.sendFile(_path2['default'].join(__dirname, 'dist/index.html'));
-});
+if (!isDeveloping) {
+  app.get('/*', function response(req, res) {
+    res.sendFile(_path2['default'].join(__dirname, 'dist/index.html'));
+  });
+}
 
 app.listen(port, 'localhost', function onStart(err) {
   if (err) {
