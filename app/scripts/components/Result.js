@@ -4,7 +4,7 @@ import React from 'react';
 // styles
 import styles from 'styles/components/Result.scss';
 
-export default class Result extends React.Component {
+class Result extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -16,5 +16,11 @@ export default class Result extends React.Component {
     );
   }
 }
-Result.propTypes = { clicked: React.PropTypes.number };
-Result.defaultProps = { clicked: 0 };
+Result.propTypes = {
+  clicked: React.PropTypes.number
+};
+Result.defaultProps = {
+  clicked: 0
+};
+
+export default Result;

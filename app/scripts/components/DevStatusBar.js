@@ -4,7 +4,7 @@ import React from 'react';
 // styles
 import styles from 'styles/components/DevStatusBar.scss';
 
-export default class DevStatusBar extends React.Component {
+class DevStatusBar extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -20,3 +20,5 @@ export default class DevStatusBar extends React.Component {
     );
   }
 }
+
+export default DevStatusBar;

@@ -2,7 +2,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-export default class About extends React.Component {
+class About extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -12,3 +12,5 @@ export default class About extends React.Component {
     );
   }
 }
+
+export default About;

@@ -9,7 +9,7 @@ import styles from 'styles/home.scss';
 import Button from 'components/Button';
 import Result from 'components/Result';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
 
@@ -44,8 +44,11 @@ export default class Home extends React.Component {
       <div className={styles.home}>
         <Button {...this.state.Button} {...this.componentHooks.Button} />
         <Result {...this.state.Result} />
-        <Link to={`/about`}>Click here to go About</Link>
+        <div><Link to={`/about`}>Click here to go About</Link></div>
+        <div><Link to={`/components`}>Component list</Link></div>
       </div>
     );
   }
 }
+
+export default Home;
