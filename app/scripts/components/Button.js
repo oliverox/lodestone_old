@@ -10,7 +10,7 @@ class Button extends React.Component {
   }
   render() {
     return (
-      <button /*className={styles.button}*/ {...this.props}>
+      <button className={styles.button} {...this.props}>
         Button
       </button>
     );

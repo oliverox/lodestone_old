@@ -2,9 +2,9 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -17,9 +17,8 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
-      template: 'app/html/index.tpl.html',
       inject: 'body',
-      filename: 'index.html'
+      template: 'app/html/index.prod.html'
     }),
     new ExtractTextPlugin('[name]-[hash].min.css'),
     new webpack.optimize.UglifyJsPlugin({
@@ -31,9 +30,6 @@ module.exports = {
     new StatsPlugin('webpack.stats.json', {
       source: false,
       modules: false
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ],
   resolve: {
@@ -55,7 +51,7 @@ module.exports = {
       loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
     }, {
       test: /\.scss$/,
-      loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]!sass'
+      loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss!sass')
     }]
   },
   postcss: [
